@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\Customer\AuthController\LoginRequest;
 use App\Http\Requests\API\Customer\AuthController\RegisterRequest;
+use App\Http\Resources\API\Customer\AuthenticationResource;
 use App\Http\Resources\API\Customer\CustomerResource;
 use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
@@ -36,5 +38,32 @@ class AuthController extends Controller
             'data' => [],
         ];
         return response()->json($response, 500);
+    }
+
+    /**
+     * login user in the application using laravel sanctum.
+     *
+     * @param  \App\Http\Requests\API\Customer\AuthController\LoginRequest $request
+     * @return JsonResponse
+     */
+    public function login(LoginRequest $request)
+    {
+        $user = Customer::where('email', $request->email)->first();
+        if (!$user || !password_verify($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'The provided credentials are incorrect.',
+                'data' => [],
+            ], 401);
+        }
+
+        $user->last_login = now();
+        $user->save();
+
+        $token = $user->createToken('customer_token');
+        $response = [
+            'message' => 'You are successfully logged in our API',
+            'data' => AuthenticationResource::make($token),
+        ];
+        return response()->json($response, 200);
     }
 }
