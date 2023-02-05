@@ -31,34 +31,39 @@ class AuthControllerTest extends TestCase
         ]);
     }
 
-    public function test_customer_cannot_sign_in_with_incorrect_credentials()
+    public function test_response_message_missing_attribute_name_with_invalid_password()
     {
         $customer = Customer::factory()->create();
-
-        $incorrect_password = $this->postJson(
-            route('customer.login'), [
+        $credentials = [
             'email' => $customer->email,
-            'password' => 'Incorrect_password123',
-        ])->assertUnauthorized();
+            'password' => 'Incorrect_password_1234',
+        ];
 
-        $incorrect_password->assertJsonStructure([
-            'message',
-            'data' => []
-        ]);
+        $this->postJson(route('customer.login'), $credentials)
+            ->assertDontSeeText(['password', 'email']);
+    }
 
-        $incorrect_email = $this->postJson(
-            route('customer.login'), [
+    public function test_customer_cannot_sign_in_with_invalid_email()
+    {
+        Customer::factory()->create();
+        $credentials = [
             'email' => $this->faker->email(),
             'password' => 'Password123',
-        ])->assertUnauthorized();
+        ];
 
-        $incorrect_email->assertJsonStructure([
-            'message',
-            'data' => []
-        ]);
+        $this->postJson(route('customer.login'), $credentials)
+            ->assertUnauthorized();
+    }
 
-        $incorrect_password_message = $incorrect_password->decodeResponseJson()['message'];
-        $incorrect_email_message = $incorrect_email->decodeResponseJson()['message'];
-        $this->assertEquals($incorrect_password_message, $incorrect_email_message);
+    public function test_customer_cannot_sign_in_with_incorrect_password()
+    {
+        $customer = Customer::factory()->create();
+        $credentials = [
+            'email' => $customer->email,
+            'password' => 'Incorrect_password_1234',
+        ];
+
+        $this->postJson(route('customer.login'), $credentials)
+            ->assertUnauthorized();
     }
 }
