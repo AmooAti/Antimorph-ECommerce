@@ -15,5 +15,12 @@ use \App\Http\Controllers\API\Customer\AuthController;
 |
 */
 
-Route::post('/customer/register', [AuthController::class, 'register'])->name('customer.register');
-Route::post('/customer/login', [AuthController::class, 'login'])->name('customer.login');
+Route::name('customer.')->prefix('customer')->group(function () {
+    Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+
+    // protected routes :
+    Route::middleware('auth:customer')->group(function () {
+
+    });
+});

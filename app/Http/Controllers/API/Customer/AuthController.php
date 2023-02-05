@@ -10,6 +10,7 @@ use App\Http\Resources\API\Customer\CustomerResource;
 use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -49,7 +50,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $user = Customer::where('email', $request->email)->first();
-        if (!$user || !password_verify($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'message' => 'The provided credentials are incorrect.',
                 'data' => [],

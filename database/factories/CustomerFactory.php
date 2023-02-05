@@ -22,7 +22,6 @@ class CustomerFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'phone_number' => fake()->phoneNumber(),
             'password' => bcrypt('Password123'),
-            'last_login' => fake()->dateTime(),
         ];
     }
 }
