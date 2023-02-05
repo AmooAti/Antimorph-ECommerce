@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\API\Customer\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,3 +14,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::name('customer.')->prefix('customer')->group(function () {
+    Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+
+    // protected routes :
+    Route::middleware('auth:customer')->group(function () {
+
+    });
+});
