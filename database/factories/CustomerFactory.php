@@ -20,8 +20,8 @@ class CustomerFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'phone_number' => fake()->phoneNumber(),
-            'password' => bcrypt('Password123'),
+            'phone_number' => fake()->e164PhoneNumber(), // "+989120004444"
+            'password' => '$2y$10$SlOHaxT7O7LtG2WIEf6Aiu0M5/tL5w7VrQky2CgvY.pGU2hnx2jmC', // 'Password123'
         ];
     }
 }
