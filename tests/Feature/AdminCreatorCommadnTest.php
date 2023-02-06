@@ -17,14 +17,20 @@ class AdminCreatorCommadnTest extends TestCase
      */
     public function test_example()
     {
-        $email = $this->faker->email();
+        $emailFirstAttemp = $this->faker->email();
         $this->artisan('create:admin',[
-            'email' => $email
+            'email' => $emailFirstAttemp
         ])
             ->assertExitCode(0);
         $this->assertDatabaseHas('admins',[
-            'email' => $email
+            'email' => $emailFirstAttemp
         ]);
+        $emailSecondAttemp = $this->faker->email();
+
+        $this->artisan('create:admin',[
+            'email' => $emailSecondAttemp,
+            'password' => $this->faker->password()
+        ])->assertExitCode(0);
 
     }
 }
