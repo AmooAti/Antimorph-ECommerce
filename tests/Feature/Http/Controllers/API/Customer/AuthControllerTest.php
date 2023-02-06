@@ -66,4 +66,24 @@ class AuthControllerTest extends TestCase
         $this->postJson(route('customer.login'), $credentials)
             ->assertUnauthorized();
     }
+
+    public function test_customer_can_logout_successfully()
+    {
+        $customer = Customer::factory()->create();
+
+        $loginResponse = $this->postJson(route('customer.login'), [
+            'email' => $customer->email,
+            'password' => 'Password123',
+        ]);
+        $token = $loginResponse->json()['data']['token'];
+
+        $headers = ['Authorization' => 'Bearer ' . $token];
+        $this->getJson(route('customer.logout'), $headers)
+            ->assertSuccessful();
+
+        $this->assertDatabaseMissing(
+            'personal_access_tokens',
+            ['token' => hash('sha256', last(explode('|', $token)))]
+        );
+    }
 }

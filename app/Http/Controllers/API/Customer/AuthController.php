@@ -67,4 +67,17 @@ class AuthController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    /**
+     * sing out loggedIn user and delete related access token.
+     *
+     * @return JsonResponse
+     */
+    public function logout()
+    {
+        auth('sanctum')->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'Successfully logged out.'
+        ], 200);
+    }
 }
