@@ -42,7 +42,7 @@ class CreateAdminUser extends Command
         #Generating new record for admin database
         $admin = new Admin();
         $admin->email = $email;
-        $admin->password = $password;
+        $admin->password = bcrypt($password);
 
         #check if Saving operation succeed
         if(!$admin->save()){

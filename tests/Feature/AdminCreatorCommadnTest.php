@@ -15,7 +15,7 @@ class AdminCreatorCommadnTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_admin_creation_with_artisan_command()
     {
         $emailFirstAttemp = $this->faker->email();
         $this->artisan('create:admin',[
