@@ -276,4 +276,74 @@ class CustomerControllerTest extends TestCase
                 ]
             ]);
     }
+
+
+
+    public function test_admin_can_see_list_of_customers()
+    {
+        $customers = Customer::factory()->count(10)->create();
+        $response = $this->json("GET", route('admin.customers.index'));
+        $response->assertStatus(200)
+            ->assertJsonStructure(
+                [
+                    "data"  => ['*' => ["first_name", "last_name", "email", "phone_number", "is_suspend", "last_login"]],
+                    "links" => ["first", "last", "prev", "next"],
+                    "meta"  => [
+                        "links" => ['*' => ["url", "label", "active"]],
+                        "current_page",
+                        "from",
+                        "last_page",
+                        "path",
+                        "per_page",
+                        "to",
+                        "total",
+
+                    ]
+                ]
+            );
+    }
+
+    public function test_admin_can_see_list_of_customers_with_page_and_limit()
+    {
+        $customers = Customer::factory()->count(10)->create();
+        $payload = [
+            'page'  => 1,
+            'limit' => 5,
+        ];
+        $response = $this->json("GET", route('admin.customers.index'), $payload);
+        $response->assertStatus(200)
+            ->assertJsonCount(5, "data")
+            ->assertJsonStructure(
+                [
+                    "data"  => ['*' => ["first_name", "last_name", "email", "phone_number", "is_suspend", "last_login"]],
+                    "links" => ["first", "last", "prev", "next"],
+                    "meta"  => [
+                        "links" => ['*' => ["url", "label", "active"]],
+                        "current_page",
+                        "from",
+                        "last_page",
+                        "path",
+                        "per_page",
+                        "to",
+                        "total",
+
+                    ]
+                ]
+            );
+    }
+
+    public function test_admin_can_not_see_list_of_customers_with_invalid_page_and_limit()
+    {
+        $customers = Customer::factory()->count(10)->create();
+        $payload = [
+            'page'  => "ss",
+            'limit' => "ss",
+        ];
+        $response = $this->json("GET", route('admin.customers.index'), $payload);
+        $response->assertStatus(422)
+            ->assertJsonStructure([
+                "errors"  => ["page", "limit"],
+                "message",
+            ]);
+    }
 }
