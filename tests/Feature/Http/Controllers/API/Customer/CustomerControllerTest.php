@@ -346,4 +346,14 @@ class CustomerControllerTest extends TestCase
                 "message",
             ]);
     }
+
+
+    public function test_admin_can_delete_a_customer()
+    {
+        $customer = Customer::factory()->create();
+        $response = $this->json("DELETE", route('admin.customers.destroy', $customer->id));
+        $response
+            ->assertStatus(200)
+            ->assertJson(["message"  => "Customer successfully deleted!"]);
+    }
 }
