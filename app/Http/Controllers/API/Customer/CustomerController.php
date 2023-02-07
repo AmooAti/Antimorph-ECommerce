@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Customer\CustomerController\StoreRequest;
+use App\Http\Requests\API\Customer\CustomerController\UpdateRequest;
 use App\Http\Resources\API\Admin\Customer\CustomerResource;
+use App\Models\Customer;
 use App\Services\API\Customer\CustomerService;
 
 class CustomerController extends Controller
@@ -53,9 +55,10 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreRequest $request, $id)
+    public function update(UpdateRequest $request, Customer $customer)
     {
-        //
+        $customer = $this->customerService->updateCustomer($customer, $request->validated());
+        return CustomerResource::make($customer);
     }
 
     /**
