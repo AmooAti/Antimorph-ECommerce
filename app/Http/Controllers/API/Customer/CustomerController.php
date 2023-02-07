@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\Customer\CustomerController\IndexRequest;
 use App\Http\Requests\API\Customer\CustomerController\StoreRequest;
 use App\Http\Requests\API\Customer\CustomerController\UpdateRequest;
 use App\Http\Resources\API\Admin\Customer\CustomerResource;
@@ -20,9 +21,11 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexRequest $request)
     {
-        //
+        $customers = Customer::select(["first_name", "last_name", "email", "phone_number", "is_suspend", "last_login"])
+            ->paginate($request->input('limit', 15));
+        return CustomerResource::collection($customers);
     }
 
     /**
