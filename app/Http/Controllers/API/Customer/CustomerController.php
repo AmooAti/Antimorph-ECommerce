@@ -70,8 +70,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Customer $customer)
     {
-        //
+        $deleted = $this->customerService->deleteCustomer($customer);
+        return $deleted ? response(["message" => "Customer successfully deleted!"]) : response(["message" => "Couldn't delete the Customer!"], 406);
     }
 }

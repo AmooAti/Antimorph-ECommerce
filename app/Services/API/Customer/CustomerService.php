@@ -11,9 +11,14 @@ class CustomerService
         return Customer::create($params);
     }
 
-    public function updateCustomer(Customer $customer,$params)
+    public function updateCustomer(Customer $customer, $params)
     {
         $customer->update($params);
         return $customer->refresh();
+    }
+
+    public function deleteCustomer(Customer $customer)
+    {
+        return $customer->delete();
     }
 }
