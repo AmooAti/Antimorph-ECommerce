@@ -21,6 +21,11 @@ Route::name('customer.')->prefix('customer')->group(function () {
 
     // protected routes :
     Route::middleware('auth:customer')->group(function () {
-
     });
+});
+
+
+Route::name("admin.")->prefix('admin')->group(function () {
+
+    Route::resource("customers", \App\Http\Controllers\API\Customer\CustomerController::class);
 });
