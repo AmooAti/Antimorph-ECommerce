@@ -19,7 +19,7 @@ class ImageFactory extends Factory
     {
         return [
             'path' => $this->faker->image('public',400,300, null, false),
-            'type' => $this->faker->mimeType(),
+            'type' => $this->imageMimeType(),
             'alt' => $this->faker->paragraph(),
         ];
     }
@@ -38,6 +38,22 @@ class ImageFactory extends Factory
         return $this->faker->randomElement([
             Customer::class,
 //            Product::class,
+        ]);
+    }
+
+    public function imageMimeType()
+    {
+        return $this->faker->randomElement([
+            'image/bmp', // 'bmp'
+            'image/gif', // 'gif'
+            'image/jpeg', // ['jpeg', 'jpg', 'jpe']
+            'image/png', // 'png'
+            'image/svg+xml', // ['svg', 'svgz']
+            'image/tiff', // ['tiff', 'tif']
+            'image/vnd.adobe.photoshop', // 'psd'
+            'image/vnd.wap.wbmp', // 'wbmp'
+            'image/webp', // 'webp'
+            'image/x-icon', // 'ico'
         ]);
     }
 }
