@@ -43,4 +43,12 @@ class Customer extends Authenticatable
     protected $casts = [
         'last_login' => 'datetime',
     ];
+
+    /**
+     * Get all customer's images.
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }
