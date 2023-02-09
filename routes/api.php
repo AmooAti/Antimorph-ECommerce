@@ -27,5 +27,5 @@ Route::name('customer.')->prefix('customer')->group(function () {
 
 Route::name("admin.")->prefix('admin')->group(function () {
 
-    Route::resource("customers", \App\Http\Controllers\API\Customer\CustomerController::class);
+    Route::resource("customers", \App\Http\Controllers\Admin\Customer\CustomerController::class);
 });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Customer;
+namespace App\Http\Controllers\Admin\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Customer\CustomerController\IndexRequest;
@@ -8,12 +8,12 @@ use App\Http\Requests\API\Customer\CustomerController\StoreRequest;
 use App\Http\Requests\API\Customer\CustomerController\UpdateRequest;
 use App\Http\Resources\API\Admin\Customer\CustomerResource;
 use App\Models\Customer;
-use App\Services\API\Customer\CustomerService;
+use App\Repositories\API\Customer\CustomerRepository;
 
 class CustomerController extends Controller
 {
 
-    public function __construct(private CustomerService $customerService)
+    public function __construct(private CustomerRepository $customerService)
     {
     }
     /**
