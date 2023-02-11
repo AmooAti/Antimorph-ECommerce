@@ -14,23 +14,61 @@ class AuthControllerTest extends TestCase
     
     public function testAsAdminItShouldBeAbleToLoginWithCorrectInput()
     {
-        $admin = Admin::factory()->make([
-            'username' => 'admin',
-            'password' => Hash::make('password'),
-        ]);
+        $admin = Admin::factory()->create();
 
         $payload = [
-            'username' => 'admin',
+            'email' => $admin->email,
             'password' => 'password',
         ];
 
         $this->postJson(route('admin.login'), $payload)
             ->assertSuccessful()
             ->assertJsonStructure([
+                'message',
                 'data' => [
                     'token',
-                    'expire_at'
+                    'expires_at'
                 ]
             ]);
+    }
+
+    public function testAsAdminItShouldBeUnableToLoginWithIncorrectPassword()
+    {
+        $admin = Admin::factory()->create();
+
+        $payload = [
+            'email' => $admin->email,
+            'password' => 'incorrect_password',
+        ];
+
+        $this->postJson(route('admin.login'), $payload)
+            ->assertUnauthorized();
+    }
+
+    public function testAsAdminItShouldBeUnableToLoginWithIncorrectUsername()
+    {
+        $admin = Admin::factory()->create();
+
+        $payload = [
+            'email' => $this->faker->email(),
+            'password' => 'password',
+        ];
+
+        $this->postJson(route('admin.login'), $payload)
+            ->assertUnauthorized();
+    }
+
+
+    public function testAsAdminItCanNotSeeAttributeNamesAfterFailedLogining()
+    {
+        $admin = Admin::factory()->create();
+
+        $payload = [
+            'email' => $admin->email,
+            'password' => 'incorrect_password',
+        ];
+
+        $this->postJson(route('admin.login'), $payload)
+            ->assertDontSeeText(['password', 'email']);
     }
 }

@@ -4,28 +4,35 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Admin\AuthController\LoginRequest;
+use App\Http\Resources\API\Admin\AuthenticationResource;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $params = [
-            'username' => $request->username,
-            'password' => $request->password
-        ];
-        try {
-            if (! Auth::guard('admin')->attempt($params)) {
-                return response()->json([
-                    'message' => 'Credentials do not match',
-                ], 401);
-            }
-        } catch (\Throwable $th) {
-            // Method Illuminate\Auth\RequestGuard::attempt does not exist.
-            error_log(print_r($th, true), 3, '/tmp/log.log');
-        }
+        $admin = Admin::where('email', $request->email)->first();
         
+        if (!$admin || !Hash::check($request->password, $admin->password)) {
+            return response()->json([
+                'message' => 'The provided credentials are incorrect.',
+                'date' => [],
+            ], 401);
+        }
+
+        $admin->last_login = now();
+        $admin->save();
+
+        $token = $admin->createToken('admin_token');
+        // Log::debug('token: ', $token);
+        $response = [
+            'message' => 'You are successfully logged in our API',
+            'data' => AuthenticationResource::make($token),
+        ];
+        return response()->json($response, 200);
     }
 }
