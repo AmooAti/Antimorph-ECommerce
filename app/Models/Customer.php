@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -46,8 +47,9 @@ class Customer extends Authenticatable
 
     /**
      * Get all customer's images.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function images()
+    public function images() : MorphMany
     {
         return $this->morphMany(Image::class, 'imageable');
     }
