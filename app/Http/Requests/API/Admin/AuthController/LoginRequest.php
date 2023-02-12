@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API\Admin\AuthController;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class LoginRequest extends FormRequest
 {
@@ -24,7 +25,15 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'email' => 'required|email',
+            'password' => [
+                'required',
+                'string',
+                Password::min(8)
+                    ->letters() // Require at least one letter
+                    ->mixedCase() // Require at least one uppercase and one lowercase letter
+                    ->numbers() // Require at least one number
+            ],
         ];
     }
 }
