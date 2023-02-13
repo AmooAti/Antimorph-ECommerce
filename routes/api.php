@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\Admin\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\API\Customer\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +24,5 @@ Route::name('customer.')->prefix('customer')->group(function () {
         Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     });
 });
+
+Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login');

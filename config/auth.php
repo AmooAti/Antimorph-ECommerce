@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\App;
+
 return [
 
     /*
@@ -40,6 +42,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        
+        'admin' => [
+            'driver' => 'sanctum',
+            'provider' => 'admins',
+        ],
 
         'customer' => [
             'driver' => 'sanctum',
@@ -67,7 +74,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => \App\Models\User::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => \App\Models\Admin::class,
         ],
 
         'customers' => [
@@ -98,6 +110,11 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
+        ]
     ],
 
     /*
