@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\API\Customer;
 
+use App\Models\Admin;
 use App\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -12,6 +13,12 @@ class CustomerControllerTest extends TestCase
     use RefreshDatabase,
         withFaker;
 
+    public function test_non_logined_users_does_not_have_access_to_customers_resource()
+    {
+        $response = $this->json("GET", route('admin.customers.index'));
+        $response->assertUnauthorized();
+    }
+
     public function test_admin_can_create_customer_using_valid_inputs()
     {
         $payload = [
@@ -21,9 +28,9 @@ class CustomerControllerTest extends TestCase
             'phone_number' => "09123456789",
             'password'     => "Pp1234567!",
         ];
-
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("POST", route('admin.customers.store'), $payload);
-
         $response->assertSuccessful()
             ->assertStatus(201)
             ->assertJsonStructure([
@@ -41,6 +48,8 @@ class CustomerControllerTest extends TestCase
     {
         $payload = [];
 
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("POST", route('admin.customers.store'), $payload);
 
         $response
@@ -67,6 +76,8 @@ class CustomerControllerTest extends TestCase
         ];
 
         $customer = Customer::factory()->create($payload);
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("POST", route('admin.customers.store'), $payload);
 
         $response
@@ -89,6 +100,8 @@ class CustomerControllerTest extends TestCase
         ];
 
 
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("POST", route('admin.customers.store'), $payload);
 
         $response
@@ -112,6 +125,8 @@ class CustomerControllerTest extends TestCase
         ];
 
 
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("POST", route('admin.customers.store'), $payload);
 
         $response
@@ -132,6 +147,8 @@ class CustomerControllerTest extends TestCase
             'phone_number' => "09123456789",
             'password'     => "1234",
         ];
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("POST", route('admin.customers.store'), $payload);
         $response
             ->assertStatus(422)
@@ -155,6 +172,8 @@ class CustomerControllerTest extends TestCase
             'phone_number' => "09123456789",
             'password'     => "Pp1234567!",
         ];
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("PUT", route('admin.customers.update', $customer->id), $payload);
         $response->assertSuccessful()
             ->assertStatus(200)
@@ -173,6 +192,8 @@ class CustomerControllerTest extends TestCase
     {
         $customer = Customer::factory()->create();
         $payload  = [];
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("PUT", route('admin.customers.update', $customer->id), $payload);
 
         $response
@@ -198,6 +219,8 @@ class CustomerControllerTest extends TestCase
             'phone_number' => "09123456789",
             'password'     => "Pp1234567!",
         ];
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("PUT", route('admin.customers.update', $customer->first()->id), $payload);
 
         $response
@@ -221,6 +244,8 @@ class CustomerControllerTest extends TestCase
         ];
 
 
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("PUT", route('admin.customers.update', $customer->id), $payload);
 
         $response
@@ -245,6 +270,8 @@ class CustomerControllerTest extends TestCase
         ];
 
 
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("PUT", route('admin.customers.update', $customer->id), $payload);
 
         $response
@@ -266,6 +293,8 @@ class CustomerControllerTest extends TestCase
             'phone_number' => "09123456789",
             'password'     => "1234",
         ];
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("PUT", route('admin.customers.update', $customer->id), $payload);
         $response
             ->assertStatus(422)
@@ -282,6 +311,8 @@ class CustomerControllerTest extends TestCase
     public function test_admin_can_see_list_of_customers()
     {
         $customers = Customer::factory()->count(10)->create();
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("GET", route('admin.customers.index'));
         $response->assertStatus(200)
             ->assertJsonStructure(
@@ -310,6 +341,8 @@ class CustomerControllerTest extends TestCase
             'page'  => 1,
             'limit' => 5,
         ];
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("GET", route('admin.customers.index'), $payload);
         $response->assertStatus(200)
             ->assertJsonCount(5, "data")
@@ -339,6 +372,8 @@ class CustomerControllerTest extends TestCase
             'page'  => "ss",
             'limit' => "ss",
         ];
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("GET", route('admin.customers.index'), $payload);
         $response->assertStatus(422)
             ->assertJsonStructure([
@@ -351,6 +386,8 @@ class CustomerControllerTest extends TestCase
     public function test_admin_can_delete_a_customer()
     {
         $customer = Customer::factory()->create();
+        $admin = Admin::factory()->create();
+        $this->actingAs($admin, 'admin');
         $response = $this->json("DELETE", route('admin.customers.destroy', $customer->id));
         $response
             ->assertStatus(200)
