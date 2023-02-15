@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\Admin\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\API\Customer\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +21,12 @@ Route::name('customer.')->prefix('customer')->group(function () {
 
     // protected routes :
     Route::middleware('auth:customer')->group(function () {
+        Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     });
 });
 
-
-Route::name("admin.")->prefix('admin')->group(function () {
-
+Route::name("admin.")->middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::resource("customers", \App\Http\Controllers\Admin\Customer\CustomerController::class);
 });
+
+Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login');
