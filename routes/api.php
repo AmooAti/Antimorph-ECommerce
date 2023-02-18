@@ -25,4 +25,8 @@ Route::name('customer.')->prefix('customer')->group(function () {
     });
 });
 
+Route::name("admin.")->middleware(['auth:admin'])->prefix('admin')->group(function () {
+    Route::resource("customers", \App\Http\Controllers\Admin\Customer\CustomerController::class);
+});
+
 Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login');

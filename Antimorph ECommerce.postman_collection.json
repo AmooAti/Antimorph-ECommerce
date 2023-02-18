@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "987a5d4a-07f1-46a3-af9a-6c5764d1ee37",
+		"_postman_id": "df386220-53ec-4661-871b-996d13a06336",
 		"name": "Antimorph ECommerce",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -34,7 +34,17 @@
 								}
 							]
 						},
-						"url": "{{domain}}/api/customer/login",
+						"url": {
+							"raw": "{{domain}}/api/customer/login",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"customer",
+								"login"
+							]
+						},
 						"description": "login customers using email and password."
 					},
 					"response": [
@@ -58,7 +68,17 @@
 										}
 									]
 								},
-								"url": "{{domain}}/api/customer/login"
+								"url": {
+									"raw": "{{domain}}/api/customer/login",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"customer",
+										"login"
+									]
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -155,7 +175,17 @@
 								}
 							]
 						},
-						"url": "{{domain}}/api/customer/register",
+						"url": {
+							"raw": "{{domain}}/api/customer/register",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"customer",
+								"register"
+							]
+						},
 						"description": "Store a newly created Customer in database.\nAll inputs are required except phone number.\nEmail address must be unique."
 					},
 					"response": [
@@ -194,7 +224,17 @@
 										}
 									]
 								},
-								"url": "{{domain}}/api/customer/register"
+								"url": {
+									"raw": "{{domain}}/api/customer/register",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"customer",
+										"register"
+									]
+								}
 							},
 							"status": "Created",
 							"code": 201,
@@ -258,13 +298,27 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "{{customer_token}}"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{customer_token}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
-						"url": "{{domain}}/api/customer/logout",
+						"url": {
+							"raw": "{{domain}}/api/customer/logout",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"customer",
+								"logout"
+							]
+						},
 						"description": "access token will be removed after logout."
 					},
 					"response": [
@@ -273,7 +327,17 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"url": "{{domain}}/api/customer/logout"
+								"url": {
+									"raw": "{{domain}}/api/customer/logout",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"customer",
+										"logout"
+									]
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -351,14 +415,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"info@example.com\",\n    \"password\": \"password\"\n}",
+							"raw": "{\n    \"email\": \"{{ADMIN_EMAIL}}\",\n    \"password\": \"{{ADMIN_PASSWORD}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{domain}}/api/admin/login"
+						"url": {
+							"raw": "{{domain}}/api/admin/login",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"login"
+							]
+						}
 					},
 					"response": [
 						{
@@ -386,7 +460,17 @@
 										}
 									}
 								},
-								"url": "{{domain}}/api/admin/login"
+								"url": {
+									"raw": "{{domain}}/api/admin/login",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"login"
+									]
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -439,13 +523,245 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Create Customer",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "first_name",
+									"value": "Parham",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Parnian",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "parham@a12.com",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "09123456789",
+									"type": "text"
+								},
+								{
+									"key": "is_suspend",
+									"value": "active",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678Pp!",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/admin/customers",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"customers"
+							]
+						},
+						"description": "login customers using email and password."
+					},
+					"response": []
+				},
+				{
+					"name": "Customer List",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{domain}}/api/admin/customers?page=1&limit=5",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						},
+						"description": "login customers using email and password."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "first_name",
+									"value": "Parham",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Parnian",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "parham@a1s2.com",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "09123456789",
+									"type": "text"
+								},
+								{
+									"key": "is_suspend",
+									"value": "active",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678Pp!",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/admin/customers/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"customers",
+								"1"
+							]
+						},
+						"description": "login customers using email and password."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{domain}}/api/admin/customers/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"customers",
+								"1"
+							]
+						},
+						"description": "login customers using email and password."
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
 		"type": "bearer",
-		"bearer": {
-			"token": "{{customer_token}}"
-		}
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{customer_token}}",
+				"type": "string"
+			}
+		]
 	},
 	"event": [
 		{
