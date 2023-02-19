@@ -80,4 +80,13 @@ class Product extends Model
     {
         return $this->hasMany(self::class, 'parent_id');
     }
+
+    /**
+     * Get the price record associated with the product.
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function price() : HasOne
+    {
+        return $this->hasOne(ProductPrice::class);
+    }
 }

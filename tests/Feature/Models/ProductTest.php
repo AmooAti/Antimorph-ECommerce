@@ -3,6 +3,7 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Product;
+use App\Models\ProductPrice;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Schema;
@@ -70,5 +71,12 @@ class ProductTest extends TestCase
             ->create();
 
         $this->assertInstanceOf(Product::class, $product->parent);
+    }
+
+    public function test_a_product_can_have_a_price()
+    {
+        $product = Product::factory()->hasPrice()->create();
+
+        $this->assertInstanceOf(ProductPrice::class, $product->price);
     }
 }
