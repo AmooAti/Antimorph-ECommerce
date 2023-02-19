@@ -42,7 +42,7 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        
+
         'admin' => [
             'driver' => 'sanctum',
             'provider' => 'admins',
@@ -84,7 +84,7 @@ return [
 
         'customers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Customer::class,
+            'model' => \App\Models\Customer::class,
         ],
     ],
 
