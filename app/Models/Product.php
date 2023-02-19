@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     /**
      * The attributes that are mass assignable.
@@ -44,6 +45,23 @@ class Product extends Model
         'sale_start' => 'datetime',
         'sale_end' => 'datetime',
     ];
+
+    /**
+     * Return the sluggable configuration array for this model.
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        /* If we have a user input for slug we will make it unique and sluggable,
+        and if slug is empty it will be generated from name as well. */
+        $source = !empty($this->slug) ? 'slug' : 'name';
+
+        return [
+            'slug' => [
+                'source' => $source,
+            ]
+        ];
+    }
 
     /**
      * Get the product that owns the variant.
