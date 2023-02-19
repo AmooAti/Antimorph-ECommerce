@@ -98,4 +98,13 @@ class Product extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+
+    /**
+     * The categories that belong to the product.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories() : BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }

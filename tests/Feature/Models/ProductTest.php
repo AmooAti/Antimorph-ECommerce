@@ -90,4 +90,13 @@ class ProductTest extends TestCase
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $products->images);
         $this->assertCount($count, $products->images);
     }
+
+    public function test_a_product_has_many_categories()
+    {
+        $count = rand(2,10);
+        $product = Product::factory()->hasCategories($count)->create();
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $product->categories);
+        $this->assertCount($count, $product->categories);
+    }
 }
