@@ -79,4 +79,15 @@ class ProductTest extends TestCase
 
         $this->assertInstanceOf(ProductPrice::class, $product->price);
     }
+
+    public function test_a_product_can_morphs_many_images()
+    {
+        $count = rand(2,10);
+        $products = Product::factory()
+            ->hasImages($count)
+            ->create();
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $products->images);
+        $this->assertCount($count, $products->images);
+    }
 }

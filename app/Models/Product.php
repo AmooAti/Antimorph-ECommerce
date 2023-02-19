@@ -89,4 +89,13 @@ class Product extends Model
     {
         return $this->hasOne(ProductPrice::class);
     }
+
+    /**
+     * Get all product's images.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function images() : MorphMany
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }
