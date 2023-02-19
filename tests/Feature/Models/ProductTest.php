@@ -1,0 +1,74 @@
+<?php
+
+namespace Tests\Feature\Models;
+
+use App\Models\Product;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Schema;
+use Tests\TestCase;
+
+class ProductTest extends TestCase
+{
+    use WithFaker, RefreshDatabase;
+
+    public function test_products_table_has_expected_columns()
+    {
+        $this->assertTrue(Schema::hasColumns('products', [
+            'id',
+            'name',
+            'slug',
+            'parent_id',
+            'type',
+            'short_description',
+            'description',
+            'position',
+            'status',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
+            'sale_start',
+            'sale_end',
+            'created_at',
+            'updated_at'
+        ]), 1);
+    }
+
+    public function test_products_model_has_expected_fillable_columns()
+    {
+        $fillable = [
+            'name',
+            'slug',
+            'parent_id',
+            'type',
+            'short_description',
+            'description',
+            'position',
+            'status',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
+            'sale_start',
+            'sale_end',
+        ];
+        $this->assertEquals($fillable, (new Product())->getFillable());
+    }
+
+    public function test_a_product_can_have_many_variants()
+    {
+        $count = rand(2,10);
+        $product = Product::factory()->hasVariants($count)->create();
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $product->variants);
+        $this->assertCount($count, $product->variants);
+    }
+
+    public function test_a_product_can_be_variant_of_another_product_model()
+    {
+        $product = Product::factory()
+            ->for(Product::factory(), 'parent')
+            ->create();
+
+        $this->assertInstanceOf(Product::class, $product->parent);
+    }
+}
