@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\API\Admin\AuthController;
+use App\Http\Controllers\API\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\API\Customer\AuthController as CustomerAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,13 +17,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::name('customer.')->prefix('customer')->group(function () {
-    Route::post('register', [AuthController::class, 'register'])->name('register');
-    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::post('register', [CustomerAuthController::class, 'register'])->name('register');
+    Route::post('login', [CustomerAuthController::class, 'login'])->name('login');
 
     // protected routes :
     Route::middleware('auth:customer')->group(function () {
-        Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+        Route::get('logout', [CustomerAuthController::class, 'logout'])->name('logout');
     });
 });
 
-Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login');
+Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
