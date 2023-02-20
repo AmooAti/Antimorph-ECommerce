@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('customer_email');
             $table->string('customer_firstname');
             $table->string('customer_lastname');
-            $table->foreignId('customer_id');
+            $table->foreignId('customer_id')
+                ->constrained()
+                ->nullOnDelete();
             $table->string('shipping_method');
             $table->unsignedInteger('items_count');
             $table->unsignedInteger('item_qty');

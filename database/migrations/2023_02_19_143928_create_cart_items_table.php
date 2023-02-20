@@ -18,8 +18,12 @@ return new class extends Migration
             $table->unsignedInteger('qty');
             $table->string('name');
             $table->unsignedInteger('price');
-            $table->foreignId('cart_id');
-            $table->foreignId('product_id');
+            $table->foreignId('cart_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->foreignId('product_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

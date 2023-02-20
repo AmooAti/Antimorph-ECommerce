@@ -10,6 +10,7 @@ class Cart extends Model
     use HasFactory;
 
     protected $fillable = [
+        'customer_id',
         'customer_email',
         'customer_firstname',
         'customer_lastname',
@@ -22,4 +23,9 @@ class Cart extends Model
         'discount_amount',
         'is_active'
     ];
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }
