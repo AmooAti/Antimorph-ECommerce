@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\API\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\API\Customer\AuthController as CustomerAuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +23,11 @@ Route::name('customer.')->prefix('customer')->group(function () {
     Route::middleware('auth:customer')->group(function () {
         Route::get('logout', [CustomerAuthController::class, 'logout'])->name('logout');
     });
+});
+
+
+Route::name("admin.")->middleware(['auth:admin'])->prefix('admin')->group(function () {
+    Route::resource("customers", \App\Http\Controllers\Admin\Customer\CustomerController::class);
 });
 
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
