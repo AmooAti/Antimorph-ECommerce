@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 class AdminFactory extends Factory
 {
     protected $model = Admin::class;
-    
+
     /**
      * Define the model's default state.
      *
@@ -22,7 +22,7 @@ class AdminFactory extends Factory
     {
         return [
             'email' => fake()->email(),
-            'password' => Hash::make('password'),
+            'password' => Hash::make('Password123'),
         ];
     }
 }

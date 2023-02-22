@@ -11,14 +11,14 @@ use Tests\TestCase;
 class AuthControllerTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
-    
+
     public function testAsAdminItShouldBeAbleToLoginWithCorrectInput()
     {
         $admin = Admin::factory()->create();
 
         $payload = [
             'email' => $admin->email,
-            'password' => 'password',
+            'password' => 'Password123',
         ];
 
         $this->postJson(route('admin.login'), $payload)
@@ -38,7 +38,7 @@ class AuthControllerTest extends TestCase
 
         $payload = [
             'email' => $admin->email,
-            'password' => 'incorrect_password',
+            'password' => 'Incorrect_password123',
         ];
 
         $this->postJson(route('admin.login'), $payload)
@@ -51,7 +51,7 @@ class AuthControllerTest extends TestCase
 
         $payload = [
             'email' => $this->faker->email(),
-            'password' => 'password',
+            'password' => 'Password123',
         ];
 
         $this->postJson(route('admin.login'), $payload)
@@ -65,7 +65,7 @@ class AuthControllerTest extends TestCase
 
         $payload = [
             'email' => $admin->email,
-            'password' => 'incorrect_password',
+            'password' => 'Incorrect_password123',
         ];
 
         $this->postJson(route('admin.login'), $payload)

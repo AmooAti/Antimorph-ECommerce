@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -37,7 +38,7 @@ class ImageFactory extends Factory
     {
         return $this->faker->randomElement([
             Customer::class,
-//            Product::class,
+            Product::class,
         ]);
     }
 
