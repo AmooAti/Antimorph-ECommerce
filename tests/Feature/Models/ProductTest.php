@@ -19,6 +19,7 @@ class ProductTest extends TestCase
             'id',
             'name',
             'slug',
+            'sku',
             'parent_id',
             'type',
             'short_description',
@@ -40,6 +41,7 @@ class ProductTest extends TestCase
         $fillable = [
             'name',
             'slug',
+            'sku',
             'parent_id',
             'type',
             'short_description',

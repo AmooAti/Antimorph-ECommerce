@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use BinaryCats\Sku\HasSku;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Product extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory, Sluggable, HasSku;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +24,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'slug',
+        'sku',
         'parent_id',
         'type',
         'short_description',

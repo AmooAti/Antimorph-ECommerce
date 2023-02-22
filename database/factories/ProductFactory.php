@@ -19,6 +19,7 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->sentence,
             'slug' => $this->faker->slug,
+            'sku' => $this->faker->sentence,
             'short_description' => $this->faker->paragraph,
             'description' => $this->faker->paragraphs(3, true),
             'meta_title' => $this->faker->sentence,
