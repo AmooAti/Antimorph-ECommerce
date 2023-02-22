@@ -4,8 +4,73 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1acce863dafac0b715a1d6e1bac979e3",
+    "content-hash": "501aabe7c07a0ad3cf5f5537b6573458",
     "packages": [
+        {
+            "name": "binary-cats/laravel-sku",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/binary-cats/laravel-sku.git",
+                "reference": "edabe1ab6454c06a7789ef2e7f1df1d3d4c6d777"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/binary-cats/laravel-sku/zipball/edabe1ab6454c06a7789ef2e7f1df1d3d4c6d777",
+                "reference": "edabe1ab6454c06a7789ef2e7f1df1d3d4c6d777",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.6|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.6|^4.0|^5.0|^6.0|^7.0|^8.0",
+                "phpunit/phpunit": "^7.0|^8.2|^9.0"
+            },
+            "suggest": {
+                "binary-cats/laravel-lob-webhooks": "Handle Lob.com webhooks in your Laravel application",
+                "binary-cats/laravel-mailgun-webhooks": "Handle Mailgun webhooks in your Laravel application"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BinaryCats\\Sku\\SkuServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BinaryCats\\Sku\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cyrill Kalita",
+                    "email": "cyrill.kalita@gmail.com",
+                    "homepage": "https://github.com/binary-cats",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Generate SKUs for Eloquent models",
+            "homepage": "https://github.com/binary-cats/laravel-sku",
+            "keywords": [
+                "binary-cats",
+                "eloquent",
+                "laravel",
+                "sku"
+            ],
+            "support": {
+                "issues": "https://github.com/binary-cats/laravel-sku/issues",
+                "source": "https://github.com/binary-cats/laravel-sku/tree/0.6.0"
+            },
+            "time": "2023-01-28T17:40:58+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.10.2",
